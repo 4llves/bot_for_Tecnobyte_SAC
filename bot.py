@@ -5,22 +5,19 @@ import pandas as pd
 def down_f(i):
     count = 0
     while count < i:
-      py.press('down')      
-      t.sleep(1)
+      py.press('down')
       count += 1
 
 def tab_f(i):
     count = 0
     while count < i:
-      py.press('tab')      
-      t.sleep(1)
+      py.press('tab')
       count += 1
 
 def save_f():    
    py.keyDown('ctrl')
    py.press('s')
    py.keyUp('ctrl')
-   t.sleep(1)
 
 def finished_f():
    py.keyDown('alt')
@@ -33,6 +30,12 @@ table = pd.read_excel(f"{name_table}.xlsx", dtype={'COD': str})
 
 t.sleep(5)
 
+py.keyDown('alt')
+py.press('c')
+py.keyUp('alt')
+down_f(3)
+py.press('enter')
+
 for i, row in table.iterrows():
     code = row["COD"]
     description = row["DESCRICAO"]
@@ -42,14 +45,10 @@ for i, row in table.iterrows():
     manufacturer = row["FABRICANTE"]
     group = row["GRUPO"]
     stock = row["ESTOQUE"]
-    min_stock = row["ESTOQUE_MIN"]
+    min_stock = row["ESTOQUE_MIN"]       
     
-    py.press('alt')
-    py.press('c')
-    down_f(3)
-    py.press('enter')
     py.write(str(code))
-    py.press('tab')
+    tab_f(2)
     down_f(1)
     tab_f(3)
     py.write(str(description))
@@ -67,9 +66,15 @@ for i, row in table.iterrows():
     py.write(str(stock))
     tab_f(1)
     py.write(str(min_stock))
+    t.sleep(1)
     save_f()
-    py.press('alt')
+    t.sleep(1)    
+    py.keyDown('alt')
     py.press('r')
+    py.keyUp('alt')
     down_f(4)
-    finished_f()
-    py.press('s')
+    py.press('enter')
+    t.sleep(1)
+
+finished_f()
+py.press('n')
